@@ -4,8 +4,11 @@ package com.example.android.booklistingapp;
  * Created by XY on 21.5.2017.
  */
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -120,6 +123,8 @@ public final class QueryUtils {
 
             JSONObject baseJsonResponse = new JSONObject(bookJSON);
 
+            if (baseJsonResponse.has("items")) {
+
             JSONArray bookArray = baseJsonResponse.getJSONArray("items");
 
             for (int i = 0; i < bookArray.length(); i++) {
@@ -148,7 +153,7 @@ public final class QueryUtils {
 
                 books.add(book);
             }
-
+        }
         } catch (JSONException e) {
 
             Log.e("QueryUtils", "Problem parsing the earthquake JSON results", e);
