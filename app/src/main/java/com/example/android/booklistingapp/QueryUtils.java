@@ -125,35 +125,35 @@ public final class QueryUtils {
 
             if (baseJsonResponse.has("items")) {
 
-            JSONArray bookArray = baseJsonResponse.getJSONArray("items");
+                JSONArray bookArray = baseJsonResponse.getJSONArray("items");
 
-            for (int i = 0; i < bookArray.length(); i++) {
+                for (int i = 0; i < bookArray.length(); i++) {
 
-                String title;
-                String author;
+                    String title;
+                    String author;
 
-                JSONObject currentBook = bookArray.getJSONObject(i);
+                    JSONObject currentBook = bookArray.getJSONObject(i);
 
-                JSONObject volumeInfo = currentBook.getJSONObject("volumeInfo");
+                    JSONObject volumeInfo = currentBook.getJSONObject("volumeInfo");
 
-                if (volumeInfo.has("title")) {
-                    title = volumeInfo.getString("title");
-                } else {
-                    title = "No title found";
+                    if (volumeInfo.has("title")) {
+                        title = volumeInfo.getString("title");
+                    } else {
+                        title = "No title found";
+                    }
+
+                    if (volumeInfo.has("authors")) {
+                        author = volumeInfo.getString("authors");
+                        author = author.replace("\"", " ").replace("[", "").replace("]", "");
+                    } else {
+                        author = "  No author found";
+                    }
+
+                    Book book = new Book(title, author);
+
+                    books.add(book);
                 }
-
-                if (volumeInfo.has("authors")) {
-                    author = volumeInfo.getString("authors");
-                    author = author.replace("\"", " ").replace("[", "").replace("]", "");
-                } else {
-                    author = "  No author found";
-                }
-
-                Book book = new Book(title, author);
-
-                books.add(book);
             }
-        }
         } catch (JSONException e) {
 
             Log.e("QueryUtils", "Problem parsing the earthquake JSON results", e);
